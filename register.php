@@ -114,7 +114,7 @@ color:grey;
 </div> <!-- Grid row -->
 
 <h4>Department</h4>
-<!--<div class="input-field col s12" >-->
+<div class="input-field col s12" >  <!--  -->
    <select name="sec">
 <option value="" disabled selected hidden>Select Section</option>
    <optgroup label="CSE">
@@ -143,11 +143,12 @@ color:grey;
 </select>
       </optgroup>
     </select>
-<!--  </div> ->
-               <div class="panel-footer">
-        <!-- btn-primary -->
+  </div> <!--  -->
+             <div class="panel-footer">
+        <!--   btn-primary -->
                    <button id="submit" type="submit" class="btn "  value="Submit">Submit</button>
-             </div>         </form>
+             </div>
+         </form>
      </div>
     </div>
    </div>
@@ -173,7 +174,7 @@ color:grey;
 <script>
 $(document).ready(function() { 
  $("#submit").click(function(e){
-   e.preventDefault()
+   e.preventDefault();
 var zn =$('[name=Name]').val();
 var zd =$('[name=sec]').val();
 var zr =$('[name=Reg]').val();

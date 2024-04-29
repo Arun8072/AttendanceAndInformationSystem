@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 //MySQLi Object-oriented(php with mysql) is used in all
@@ -103,33 +104,32 @@ if(isset($Date) && strlen($tname)>11 && strlen($tname)<15 && strlen($_POST['pr']
 
 if("select"==$_POST['a']){
 
-$sec= $_POST['sec'];
-$batch=$_POST['bs']."-".$_POST['bl'];
-$tname=$batch.$sec;
-$tname = preg_replace("/[^A-Z0-9]/", "", $tname);
+   $sec= $_POST['sec'];
+   $batch=$_POST['bs']."-".$_POST['bl'];
+   $tname=$batch.$sec;
+   $tname = preg_replace("/[^A-Z0-9]/", "", $tname);
 
-if(strlen($tname)>11 && strlen($tname)<15) { 
-//$Sec= $_POST['dept'];
-$sql = "SELECT RegisterNumber,Name FROM {$tname} ORDER BY RegisterNumber DESC";
+  if(strlen($tname)>11 && strlen($tname)<15) { 
+    //$Sec= $_POST['dept'];
+    $sql = "SELECT RegisterNumber,Name FROM {$tname} ORDER BY RegisterNumber DESC";
 
-$result = $conn->query($sql);
-if ($conn->query($sql) ===FALSE) {
- echo "<br>select-Error : " .$conn->error;
-  }
+    $result = $conn->query($sql);
+    if ($conn->query($sql) ===FALSE) {
+       echo "<br>select-Error : " .$conn->error;
+    }else if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+              if($row["RegisterNumber"]>1){
+                 echo  "<hr>Name: " . $row["Name"] . "<br>RegNumber: " . $row["RegisterNumber"];
+              }//if
+            }//wh
+    } else {
+       echo "0 results";
+    }//el
+        
 
-if ($result->num_rows > 0) {
-    // output data of each row
-  while($row = $result->fetch_assoc()) {
-  if($row["RegisterNumber"]>1){
-    echo  "<hr>Name: " . $row["Name"] . "<br>RegNumber: " . $row["RegisterNumber"];
-    }//if
-    }
-  } else {
-    echo "0 results";
-     }
-
-}//if
-
+  }//if
+ return;
 }//sl if
 
 if("update"==$_POST['a']){
@@ -151,72 +151,74 @@ $upd="UPDATE {$tname} SET {$cname}= '{$v}' WHERE Name ='{$n}' AND RegisterNumber
  if ($conn->query($upd) ===FALSE) {
   echo "\nUpdate-Error : ";
  // echo $conn->error;
-  }
+  }//if
   
 }//for
 echo "Submitted";
 }//if
+
 }// update if 
 
 if("user"==$_POST['au']){
+
  $id=intval($_POST['unqid']);
  $uid=intval("620117104010");
  if($id!==$uid){
  exit("Invalid Unique password");
  die();
  }
- $data= json_decode($_POST['prd']);
+  $data= json_decode($_POST['prd']);
 $us=preg_replace("/[^a-zA-Z0-9.\s]/", "", $data[0]);
 $ps=MD5(strval(trim($data[1])));
-$data= preg_replace("/[^A-Z0-9]/","",$data);
-$mp1=$data[2];
-$mp2=$data[3];
-$mp3=$data[4];
-$mp4=$data[5];
-$mp5=$data[6];
-$mp6=$data[7];
-$mp7=$data[8];
-$mp8=$data[9];
-$tup1=$data[10];
-$tup2=$data[11];
-$tup3=$data[12];
-$tup4=$data[13];
-$tup5=$data[14];
-$tup6=$data[15];
-$tup7=$data[16];
-$tup8=$data[17];
-$wp1=$data[18];
-$wp2=$data[19];
-$wp3=$data[20];
-$wp4=$data[21];
-$wp5=$data[22];
-$wp6=$data[23];
-$wp7=$data[24];
-$wp8=$data[25];
-$tp1=$data[26];
-$tp2=$data[27];
-$tp3=$data[28];
-$tp4=$data[29];
-$tp5=$data[30];
-$tp6=$data[31];
-$tp7=$data[32];
-$tp8=$data[33];
-$fp1=$data[34];
-$fp2=$data[35];
-$fp3=$data[36];
-$fp4=$data[37];
-$fp5=$data[38];
-$fp6=$data[39];
-$fp7=$data[40];
-$fp8=$data[41];
-$sp1=$data[42];
-$sp2=$data[43];
-$sp3=$data[44];
-$sp4=$data[45];
-$sp5=$data[46];
-$sp6=$data[47];
-$sp7=$data[48];
-$sp8=$data[49];
+$data= preg_replace("/[^a-zA-Z0-9]/","",$data);
+$mp1=strtoupper($data[2]);
+$mp2=strtoupper($data[3]);
+$mp3=strtoupper($data[4]);
+$mp4=strtoupper($data[5]);
+$mp5=strtoupper($data[6]);
+$mp6=strtoupper($data[7]);
+$mp7=strtoupper($data[8]);
+$mp8=strtoupper($data[9]);
+$tup1=strtoupper($data[10]);
+$tup2=strtoupper($data[11]);
+$tup3=strtoupper($data[12]);
+$tup4=strtoupper($data[13]);
+$tup5=strtoupper($data[14]);
+$tup6=strtoupper($data[15]);
+$tup7=strtoupper($data[16]);
+$tup8=strtoupper($data[17]);
+$wp1=strtoupper($data[18]);
+$wp2=strtoupper($data[19]);
+$wp3=strtoupper($data[20]);
+$wp4=strtoupper($data[21]);
+$wp5=strtoupper($data[22]);
+$wp6=strtoupper($data[23]);
+$wp7=strtoupper($data[24]);
+$wp8=strtoupper($data[25]);
+$tp1=strtoupper($data[26]);
+$tp2=strtoupper($data[27]);
+$tp3=strtoupper($data[28]);
+$tp4=strtoupper($data[29]);
+$tp5=strtoupper($data[30]);
+$tp6=strtoupper($data[31]);
+$tp7=strtoupper($data[32]);
+$tp8=strtoupper($data[33]);
+$fp1=strtoupper($data[34]);
+$fp2=strtoupper($data[35]);
+$fp3=strtoupper($data[36]);
+$fp4=strtoupper($data[37]);
+$fp5=strtoupper($data[38]);
+$fp6=strtoupper($data[39]);
+$fp7=strtoupper($data[40]);
+$fp8=strtoupper($data[41]);
+$sp1=strtoupper($data[42]);
+$sp2=strtoupper($data[43]);
+$sp3=strtoupper($data[44]);
+$sp4=strtoupper($data[45]);
+$sp5=strtoupper($data[46]);
+$sp6=strtoupper($data[47]);
+$sp7=strtoupper($data[48]);
+$sp8=strtoupper($data[49]);
 
 if("ucreate"==$_POST['ar']){
 $sql = "CREATE TABLE IF NOT EXISTS Staff (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,username VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(35) NOT NULL UNIQUE,Monp1 VARCHAR(14),Monp2 VARCHAR(14),Monp3 VARCHAR(14),Monp4 VARCHAR(14),Monp5 VARCHAR(14),Monp6 VARCHAR(14),Monp7 VARCHAR(14),Monp8 VARCHAR(14),Tuep1 VARCHAR(14),Tuep2 VARCHAR(14),Tuep3 VARCHAR(14),Tuep4 VARCHAR(14),Tuep5 VARCHAR(14),Tuep6 VARCHAR(14),Tuep7 VARCHAR(14),Tuep8 VARCHAR(14),Wedp1 VARCHAR(14),Wedp2 VARCHAR(14),Wedp3 VARCHAR(14),Wedp4 VARCHAR(14),Wedp5 VARCHAR(14),Wedp6 VARCHAR(14),Wedp7 VARCHAR(14),Wedp8 VARCHAR(14),Thup1 VARCHAR(14),Thup2 VARCHAR(14),Thup3 VARCHAR(14),Thup4 VARCHAR(14),Thup5 VARCHAR(14),Thup6 VARCHAR(14),Thup7 VARCHAR(14),Thup8 VARCHAR(14),Frip1 VARCHAR(14),Frip2 VARCHAR(14),Frip3 VARCHAR(14),Frip4 VARCHAR(14),Frip5 VARCHAR(14),Frip6 VARCHAR(14),Frip7 VARCHAR(14),Frip8 VARCHAR(14),Satp1 VARCHAR(14),Satp2 VARCHAR(14),Satp3 VARCHAR(14),Satp4 VARCHAR(14),Satp5 VARCHAR(14),Satp6 VARCHAR(14),Satp7 VARCHAR(12),Satp8 VARCHAR(14),accessto VARCHAR(20) NULL DEFAULT NULL,accessfrom VARCHAR(12) NULL DEFAULT NULL) ";
@@ -376,7 +378,9 @@ for($i=1;$i<$pr;$i++){
  $period=date('D')."p".$i;
 $sql = "SELECT {$period} FROM Staff WHERE username='{$user}' AND password='{$pass}' ";
  $result = $conn->query($sql);
-if($result->num_rows > 0){
+if ($result==FALSE) {
+ echo "<br>Select-Error : " .$conn->error;
+  }else if($result->num_rows > 0){
  $row = $result->fetch_array();
 echo '<button class="rework m-1 btn btn-outline-secondary">'.$row[0].'</button>' ;
 }
@@ -387,10 +391,9 @@ if("redo2"==$_POST['a']){
 $tname = $_POST['tname'];
   $sql = "SELECT Name,RegisterNumber FROM {$tname} WHERE RegisterNumber!='1' ";
  $result = $conn->query($sql);
-/* if ($result==FALSE) {
+ if ($result==FALSE) {
  echo "<br>Select-Error : " .$conn->error;
-  } */
-if($result->num_rows > 0){
+  }else if($result->num_rows > 0){
 while($row = $result->fetch_assoc()) { 
   echo "\n";
  //make align one by one in portrait and float right in landscape mode
@@ -420,4 +423,4 @@ if(session_destroy()) {
   
 $conn->close();
 }//post
-?>
+?>  

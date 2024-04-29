@@ -1,5 +1,6 @@
 <?php 
 session_start();
+$Error="";
    if($_SERVER["REQUEST_METHOD"] == "POST" || isset($_SESSION['attusername'])) {
       // username and password sent from form 
 //if session not working at new device set session only once $_SESSION['attusername'] = "hisyd" and erase it $_SESSION['attusername'] = "";
@@ -29,6 +30,7 @@ if ($conn->connect_error) {
    $sql = "SELECT username,password FROM Staff";
 $result = $conn->query($sql);
 $pass=MD5(strval(trim($pass)));
+
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
@@ -78,14 +80,17 @@ echo "Please ".$_SESSION['attusername']."<h2><a href = \"logout.php\">Sign Out</
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/util.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
+<style type="text/css">
+
+</style>
 </head>
 <body>
 	
-	
-	<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+	<div class="container-login100 p-l-55 p-r-55 p-t-80 p-b-30 mx-auto" style="background-image: url('images/bg-01.jpeg');">
+
 		<div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
 			<form class="login100-form validate-form" method="POST">                      
                                              
@@ -133,6 +138,7 @@ echo "Please ".$_SESSION['attusername']."<h2><a href = \"logout.php\">Sign Out</
 	<script src="vendor/bootstrap/js/popper.min.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
+
 
 </body>
 </html>

@@ -824,7 +824,9 @@ else{
 $sql = "SELECT Name FROM {$tname}" ;
 $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
+if ($result===FALSE) {
+ echo "<br>Select-Error : " .$conn->error;
+ }else if ($result->num_rows > 0) {
 
   while($row = $result->fetch_assoc()) {
   echo  "<th>". $row["Name"] . "</th>";
@@ -852,10 +854,13 @@ echo "<tr>
 <th>$y</th>";
 $sql = "SELECT {$y} FROM {$tname} "; 
 $result = $conn->query($sql);
-if ($result->num_rows > 0) {
+
+if ($result===FALSE) {
+ echo "<br>Select-Error : " .$conn->error;
+ }else if ($result->num_rows > 0) {
  while($row = $result->fetch_assoc()) {
  echo "<td>".fu($row["$y"])."</td>";
-}
+} 
 }
 else{
     echo "<td> 0 results </td>";
@@ -869,7 +874,7 @@ echo"</tr>";
 for($k=-1;$k>-155;$k--){
   echo "<tr>";
  $d=strtotime("$k days");
-if(Sun==date('D',$d)){
+if("Sun"==date('D',$d)){
  continue;
 }
 $d=date('DdMY',$d);
@@ -880,7 +885,10 @@ for($i=1;$i<9;$i++){
 
 $sql="SELECT {$t[1]},{$t[2]},{$t[3]},{$t[4]},{$t[5]},{$t[6]},{$t[7]},{$t[8]} FROM {$tname} ";
 $result = $conn->query($sql);
-if ($result->num_rows > 0) {
+
+if ($result===FALSE) {
+ echo "<br>Select-Error : " .$conn->error;
+ }else if ($result->num_rows > 0) {
  while($row = $result->fetch_assoc()) {
  echo '<td>';
 echo '<div class="row">';

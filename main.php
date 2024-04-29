@@ -1,12 +1,14 @@
+<!DOCTYPE html>
+<!-- doctype  must be at top of the page , so php moved to second line ,this reduces errors on console -->
 <?php
    session_start();
    date_default_timezone_set("Asia/Kolkata");
+
 if(!isset($_SESSION['attusername'])){
  die(header("location:index.php"));
       
    }
 ?>
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -16,8 +18,8 @@ if(!isset($_SESSION['attusername'])){
     <title>Attendance management</title>
 
     <!-- Bootstrap CDN commands -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   
       <!-- Compiled and minified materialize CSS CDN commands -->
@@ -102,13 +104,15 @@ box-shadow:1px 0px 3px orange;
 
 </style>
 
-<!--changing the width using js-->
-  <div id="pb" class="progress-bar bg-success fixed-top" role="progressbar" style="width:0%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 </head>
+
 <body>
 
+<!--changing the width using js-->
+  <div id="pb" class="progress-bar bg-success fixed-top" role="progressbar" style="width:0%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+
 <!--side Nav -->
- <ul id="slide-out" class="sidenav fixed">
+ <ul id="slide-out" class="sidenav fixed ">
  <div class="user-view">
       <div class="background">
         <img src="images/imgt.jpg">
@@ -125,7 +129,7 @@ $Y=date("Y");
 }else{
 $Y=date("Y")-1;
 }
-$fi=$Y.$Y+4;
+$fi=($Y).($Y)+4;
 $tw=($Y-1).($Y-1)+4;
 $th=($Y-2).($Y-2)+4;
 $fo=($Y-3).($Y-3)+4;
@@ -133,6 +137,7 @@ $fo=($Y-3).($Y-3)+4;
 $mfi=$Y.$Y+2;
 $mtw=($Y-1).($Y-1)+2;
 ?>
+
  <form id="snform" method="post">
  <li class="no-padding">
   <ul class="collapsible collapsible-accordion">
@@ -143,6 +148,7 @@ $mtw=($Y-1).($Y-1)+2;
  <ul>
   <li>
   <ul class="collapsible collapsible-accordion">
+
   <li>
     <a><span class="collapsible-header">First year<i class="material-icons">arrow_drop_down</i></span></a>
 <div class="collapsible-body">     
@@ -191,9 +197,10 @@ $mtw=($Y-1).($Y-1)+2;
    </ul><!--col acc-->
    </ul><!--col body-->
  </li><!--acc child-->
-  
+
+  <!-- unmatched li -->
 <li>
-   <span class="collapsible-header"><i class="material-icons">list</i>Electronics&Comm Engg</span>
+   <span class="collapsible-header"><i class="material-icons">list</i>Electronics and Comm Engg</span>
 <div class="collapsible-body">
  <ul>
   <li>
@@ -247,7 +254,7 @@ $mtw=($Y-1).($Y-1)+2;
   
   
 <li>
-    <span class="collapsible-header"> <i class="material-icons">list</i>Electrical&Electronics Engg</span>
+    <span class="collapsible-header"> <i class="material-icons">list</i>Electrical and Electronics Engg</span>
 <div class="collapsible-body">
  <ul>
   <li>
@@ -474,6 +481,7 @@ $conn = new  mysqli($servername, $username, $password,$dbname);
 if ($conn->connect_error) {
    die("<br>Connection failed: "  . $conn->connect_error);
 }
+$tname="";
 if (isset($_POST['submit']) ) {
     $tname=$_POST['submit'];
 }//if
@@ -493,20 +501,21 @@ else{
         $pr="p6";
         }elseif($time>=date('H:i',strtotime("15:15"))&& $time<date('H:i',strtotime("16:00"))){
         $pr="p7";
-        }elseif($time>=date('H:i',strtotime("16:00"))&& $time<date('H:i',strtotime("16:35"))){
+        }elseif($time>=date('H:i',strtotime("16:00"))&& $time<date('H:i',strtotime("21:35"))){
         $pr="p8";
         }else{ 
-        $pr="Timeout";
+       echo  $pr="Timeout";
+       // die("Timeout");
         }
- $user=$_SESSION['attusername'];
- $pass=$_SESSION['attpassword'];
- 	  $period=$day."$pr";
+      $user=$_SESSION['attusername'];
+      $pass=$_SESSION['attpassword'];
+ 	    $period=($day).($pr);
+
    		 $sql = "SELECT {$period} FROM Staff WHERE username='{$user}' AND password='{$pass}' ";
  $result = $conn->query($sql);
-/*if ($result===FALSE) {
+if ($result===FALSE) {
  echo "<br>Select-Error : " .$conn->error;
- }*/
- if ($result->num_rows>0) {
+ }else if ($result->num_rows>0) {
     // output data of each row
   while($row = $result->fetch_assoc()) {
 //print_r($row);
@@ -524,10 +533,9 @@ echo'<span id="cbg"  class="badge"></span>
 
  $sql = "SELECT Name,RegisterNumber FROM {$tname} WHERE RegisterNumber!='1' ";
  $result = $conn->query($sql);
-/* if ($result==FALSE) {
+ if ($result==FALSE) {
  echo "<br>Select-Error : " .$conn->error;
-  }*/
-if($result->num_rows > 0){
+  }else if($result->num_rows > 0){
 while($row = $result->fetch_assoc()) { 
   echo "\n";
  //make align one by one in portrait and float right in landscape mode
@@ -623,6 +631,7 @@ $conn->close();
     <!-- Include all compiled plugins (below), or include individual files as needed -->
  
 <script>
+ 
 $(document).ready(function(){
 $("#snform").hide();
 
@@ -1002,7 +1011,7 @@ $("#sj").hide();
  <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   
-      <script src="js/bootstrap.min.js"></script>
+      <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
  
  <!-- materialcsslite   removed  because of it not working with materialize CSS-->
  
