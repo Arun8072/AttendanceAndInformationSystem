@@ -544,7 +544,7 @@ if ($result===FALSE) {
 }//el
 
   echo '<h6 class="container">';
-  echo $tname;
+  echo strtoupper($tname);
 echo'<span id="cbg"  class="badge"></span>
 </h6><br> ';
 
@@ -648,371 +648,421 @@ $conn->close();
     <!-- Include all compiled plugins (below), or include individual files as needed -->
  
 <script>
- 
-$(document).ready(function(){
-$("#snform").hide();
+ $(document).ready(function() {
+  $("#snform").hide();
 
-//click an dblclick function on same element
+  //click an dblclick function on same element
 
-$( ".chip" ).on({
+  $(".chip").on({
 
-// if chip clicked present
-"click": function() {  
-$(this).attr("value","P");
- $(this).css("box-shadow", "1px 1px 5px green");
- $(this).fadeTo(0,1);
+    // if chip clicked present
+    "click": function() {
+      $(this).attr("value", "P");
+      $(this).css("box-shadow", "1px 1px 5px green");
+      $(this).fadeTo(0, 1);
 
-// changing value for progress bar as per no of chip selected
- var obt = document.querySelectorAll("div[value]").length;
-var prc = Math.ceil(obt*100/ttl);
-$('#pb').attr('style', 'width:'+Number(prc)+'%');
-  },
- 
-//if double clicked absent
-"dblclick": function() { 
-$(this).attr("value","A");
-   $(this).css("box-shadow", "1px 0px 3px black");
-  $(this).fadeTo(0,0.4); }
+      // changing value for progress bar as per no of chip selected
+      var obt = document.querySelectorAll("div[value]").length;
+      var prc = Math.ceil(obt * 100 / ttl);
+      $('#pb').attr('style', 'width:' + Number(prc) + '%');
+    },
 
-});
+    //if double clicked absent
+    "dblclick": function() {
+      $(this).attr("value", "A");
+      $(this).css("box-shadow", "1px 0px 3px black");
+      $(this).fadeTo(0, 0.4);
+    }
 
-//img tag  is clicked onduty
+  });
 
-$(".od").click(function(){
-$(this).toggle(
-  function(){
- $(this).parent().attr("value","O");
-  $(this).parent().css("box-shadow", "1px 0px 3px orange");
-});//tg
- });//clk
+  //img tag  is clicked onduty
 
-
-//send chips name,dept,value attributes with values to ins.php through ajax
-$("#sj").click(function(){ 
- $(this).prop( "disabled", true );
-var bt=this;
-var tname="<?php echo $tname; ?>";
-var pr="<?php echo $pr; ?>";
-
-if(pr!=="Timeout" && tname!=="Timeout"){
-
-$.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{tname:tname,pr:pr,a:"alter"},
-    success: function(data){
-    //console.log(data);
-     var arr=[];
-$(".chip").each(function(){
- var sd = $(this).attr("name") ;
- var as = $(this).attr("reg") ;
- var df = $(this).attr("value");
-arr.push([sd,as,df]);
-});//ech      
-
- $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{Arr:arr,tname:tname,pr:pr,a:"update"},
-    success: function(data){
-   $("#all").fadeOut();
-   $("#sj").text(data);
-$("[value='P'],[value='A'],[value='O'] ").parent().fadeOut("slow").remove();
-    }//suc
-});//aj
-
-    }//suc
-});//aj
-//from materialize css
-       M.toast({html: 'Successfully Sent'})
- }//pr if
- 
-});//clk
+  $(".od").click(function() {
+    $(this).toggle(
+      function() {
+        $(this).parent().attr("value", "O");
+        $(this).parent().css("box-shadow", "1px 0px 3px orange");
+      }); //tg
+  }); //clk
 
 
-/*
-$("#sw").click(function(){
- $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{a:"swapped"},
-    success: function(data){
-       $("#swapped").html(data);
-    }//suc 
-    });//aj
- $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{a:"acto"},
-    success: function(data){
-       $("#swu").html(data);
- $("#delacs").click(function(){
- var unm=$("#unm").text();
+  //send chips name,dept,value attributes with values to ins.php through ajax
+  $("#sj").click(function() {
+    $(this).prop("disabled", true); //to stop multiple clicks
+    var bt = this;
+    var tname = "<?php echo $tname; ?>";
+    var pr = "<?php echo $pr; ?>";
+
+    if (pr !== "Timeout" && tname !== "Timeout") {
+
+      $.ajax({
+        type: "POST",
+        url: 'main_backend.php',
+        data: {
+          tname: tname,
+          pr: pr,
+          a: "alter"
+        },
+        success: function(data) {
+          // console.log(data);
+          var arr = [];
+          $(".chip").each(function() {
+            if ($(this).attr("value") == "A" || $(this).attr("value") == "P" || $(this).attr("value") == "O") {
+              //filtered which has only values ,so that when second time updating it not change whole column data ,only change selective data
+              var sd = $(this).attr("name");
+              var as = $(this).attr("reg");
+              var df = $(this).attr("value");
+              arr.push([sd, as, df]);
+            }
+
+          }); //ech      
+          console.log(arr);
+          $.ajax({
+            type: "POST",
+            url: 'main_backend.php',
+            data: {
+              Arr: arr,
+              tname: tname,
+              pr: pr,
+              a: "update"
+            },
+            success: function(data) {
+
+              $("#all").fadeOut();
+              $("#sj").text(data);
+              $("[value='P'],[value='A'],[value='O'] ").parent().fadeOut("slow").remove();
+            } //suc
+          }); //aj
+
+        } //suc
+      }); //aj
+      //from materialize css
+      M.toast({
+        html: 'Successfully Sent'
+      })
+    } //pr if
+
+  }); //clk
+
+
+  /*
+  $("#sw").click(function(){
    $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{unm:unm,a:"delacs"},
-    success: function(data){
-    alert("Permission Revoked");
-     $(".modal-close").trigger("click");
-    }//suc 
-    });//aj
-   });//cl
-  }//suc 
-  });//aj
-});//cl
-
-
-$("#swap").click(function(e){
-var name=$("#usernm").val()
-var tname="<?php //echo $tname; ?>";
- e.preventDefault();
- $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{name:name,tname:tname,a:"swap"},
-    success: function(data){
-       alert(data);
-       $("#usernm").val("");
-      $(".modal-close").trigger("click");
-    }//suc 
-    });//aj
-});//cl
-*/
-    
-$("#subi").click(function(){
- $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{a:"otphad"},
-    success: function(data){
-       $("#otphad").html(data);
- $("#delotp").click(function(){
+      type: "POST",
+      url: 'fl.php',
+      data:{a:"swapped"},
+      success: function(data){
+         $("#swapped").html(data);
+      }//suc 
+      });//aj
    $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{a:"delotp"},
-    success: function(data){
-  $(".modal-close").trigger("click");
-    alert("Permission Revoked");
-    }//suc 
-    });//aj 
-   });//cl 
-  }//suc 
-  });//aj
-});//cl
-
-$("#subgt").click(function(e){
-e.preventDefault();
-var otp=$("#otpnum").val();
-var pr="<?php echo $period; ?>";
- $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{otp:otp,pr:pr,a:"subfor"},
-    success: function(data){
-       $("#subfor").html(data);
- $("#otpnum").val("");
+      type: "POST",
+      url: 'fl.php',
+      data:{a:"acto"},
+      success: function(data){
+         $("#swu").html(data);
+   $("#delacs").click(function(){
+   var unm=$("#unm").text();
+     $.ajax({
+      type: "POST",
+      url: 'fl.php',
+      data:{unm:unm,a:"delacs"},
+      success: function(data){
+      alert("Permission Revoked");
+       $(".modal-close").trigger("click");
+      }//suc 
+      });//aj
+     });//cl
     }//suc 
     });//aj
-
-});//cl
-
-
-$("#subal").click(function(e){
-var otpnum=$("#otpnum").val();
- e.preventDefault();
- $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{otpnum:otpnum,a:"subst"},
-    success: function(data){
-       alert(data);
-       $("#otpnum").val("");
-     $(".modal-close").trigger("click");
-    }//suc 
-    });//aj
-});//cl
-
-  
-  $("#redo").click(function(){
- var pr="<?php echo $pr; ?>";
-
- $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{pr:pr,a:"redo1"},
-    success: function(data){
-    $("#min").html(data);
-    
-    $(".rework").click(function(){
- var tname=$(this).text();
- $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{tname:tname,a:"redo2"},
-    success: function(data){
-    $("#min").html(data);
-    
-    $( ".chip" ).on({
-// if chip clicked present
-"click": function() {  
-$(this).attr("value","P");
- $(this).css("box-shadow", "1px 1px 5px green");
- $(this).fadeTo(0,1); },
-//if double clicked absent
-"dblclick": function() { 
-$(this).attr("value","A");
-   $(this).css("box-shadow", "1px 0px 3px black");
-  $(this).fadeTo(0,0.4); }
-});
-//img tag  is clicked onduty
-$(".od").click(function(){
-$(this).toggle(
-  function(){
- $(this).parent().attr("value","O");
-  $(this).parent().css("box-shadow", "1px 0px 3px orange");
-});//tg
- });//clk
-    
- $("#sj2").click(function(){ 
- $(this).prop( "disabled", true );
-var bt=this;
-
-if(pr!=="Timeout" && tname!=="Timeout"){
-$.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{tname:tname,pr:pr,a:"alter"},
-    success: function(data){
-    //console.log(data);
-     var arr=[];
-$(".chip").each(function(){
- var sd = $(this).attr("name") ;
- var as = $(this).attr("reg") ;
- var df = $(this).attr("value");
-arr.push([sd,as,df]);
-});//ech      
-
- $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{Arr:arr,tname:tname,pr:pr,a:"update"},
-    success: function(data){
-   $("#all").fadeOut();
-   $("#sj2").text(data);
-$("[value='P'],[value='A'],[value='O'] ").parent().fadeOut("slow").remove();
-    }//suc
-});//aj
-
-    }//suc
-});//aj
-//from materialize css
-       M.toast({html: 'Successfully Sent'})
- }//pr if
- 
-});//clk
-
- 
-    }//suc 
-    });//aj
-});//cl
-
-    }//suc 
-    });//aj
-  
-});//cl
-
-  
-//select all as present
-$("#all").click(function(){
- $.each($(".chip"), function(){ 
-   $(this).trigger("click");
- });//ech
-});//clk
+  });//cl
 
 
-// When the user scrolls down 100px from the top of the document, show the button
-window.onscroll = function() {scrollFunction()};
+  $("#swap").click(function(e){
+  var name=$("#usernm").val()
+  var tname="<?php //echo $tname; ?>";
+   e.preventDefault();
+   $.ajax({
+      type: "POST",
+      url: 'fl.php',
+      data:{name:name,tname:tname,a:"swap"},
+      success: function(data){
+         alert(data);
+         $("#usernm").val("");
+        $(".modal-close").trigger("click");
+      }//suc 
+      });//aj
+  });//cl
+  */
 
-function scrollFunction() {
-  if (document.body.scrollTop  > 100 || document.documentElement.scrollTop > 100) {
-    document.getElementById("top").style.display = "block";
-  } else {
-    document.getElementById("top").style.display = "none";
+  $("#subi").click(function() {
+    $.ajax({
+      type: "POST",
+      url: 'main_backend.php',
+      data: {
+        a: "otphad"
+      },
+      success: function(data) {
+        $("#otphad").html(data);
+        $("#delotp").click(function() {
+          $.ajax({
+            type: "POST",
+            url: 'main_backend.php',
+            data: {
+              a: "delotp"
+            },
+            success: function(data) {
+              $(".modal-close").trigger("click");
+              alert("Permission Revoked");
+            } //suc 
+          }); //aj 
+        }); //cl 
+      } //suc 
+    }); //aj
+  }); //cl
+
+  $("#subgt").click(function(e) {
+    e.preventDefault();
+    var otp = $("#otpnum").val();
+    var pr = "<?php echo $period; ?>";
+    $.ajax({
+      type: "POST",
+      url: 'main_backend.php',
+      data: {
+        otp: otp,
+        pr: pr,
+        a: "subfor"
+      },
+      success: function(data) {
+        $("#subfor").html(data);
+        $("#otpnum").val("");
+      } //suc 
+    }); //aj
+
+  }); //cl
+
+
+  $("#subal").click(function(e) {
+    var otpnum = $("#otpnum").val();
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: 'main_backend.php',
+      data: {
+        otpnum: otpnum,
+        a: "subst"
+      },
+      success: function(data) {
+        alert(data);
+        $("#otpnum").val("");
+        $(".modal-close").trigger("click");
+      } //suc 
+    }); //aj
+  }); //cl
+
+
+  $("#redo").click(function() {
+    var pr = "<?php echo $pr; ?>";
+
+    $.ajax({
+      type: "POST",
+      url: 'main_backend.php',
+      data: {
+        pr: pr,
+        a: "redo1"
+      },
+      success: function(data) {
+        $("#min").html(data);
+
+        $(".rework").click(function() {
+          var tname = $(this).text();
+          $.ajax({
+            type: "POST",
+            url: 'main_backend.php',
+            data: {
+              tname: tname,
+              a: "redo2"
+            },
+            success: function(data) {
+              $("#min").html(data);
+
+              $(".chip").on({
+                // if chip clicked present
+                "click": function() {
+                  $(this).attr("value", "P");
+                  $(this).css("box-shadow", "1px 1px 5px green");
+                  $(this).fadeTo(0, 1);
+                },
+                //if double clicked absent
+                "dblclick": function() {
+                  $(this).attr("value", "A");
+                  $(this).css("box-shadow", "1px 0px 3px black");
+                  $(this).fadeTo(0, 0.4);
+                }
+              });
+              //img tag  is clicked onduty
+              $(".od").click(function() {
+                $(this).toggle(
+                  function() {
+                    $(this).parent().attr("value", "O");
+                    $(this).parent().css("box-shadow", "1px 0px 3px orange");
+                  }); //tg
+              }); //clk
+
+              $("#sj2").click(function() {
+                $(this).prop("disabled", true);
+                var bt = this;
+
+                if (pr !== "Timeout" && tname !== "Timeout") {
+                  $.ajax({
+                    type: "POST",
+                    url: 'main_backend.php',
+                    data: {
+                      tname: tname,
+                      pr: pr,
+                      a: "alter"
+                    },
+                    success: function(data) {
+                      //console.log(data);
+                      var arr = [];
+                      $(".chip").each(function() {
+                        var sd = $(this).attr("name");
+                        var as = $(this).attr("reg");
+                        var df = $(this).attr("value");
+                        arr.push([sd, as, df]);
+                      }); //ech      
+
+                      $.ajax({
+                        type: "POST",
+                        url: 'main_backend.php',
+                        data: {
+                          Arr: arr,
+                          tname: tname,
+                          pr: pr,
+                          a: "update"
+                        },
+                        success: function(data) {
+                          $("#all").fadeOut();
+                          $("#sj2").text(data);
+                          $("[value='P'],[value='A'],[value='O'] ").parent().fadeOut("slow").remove();
+                        } //suc
+                      }); //aj
+
+                    } //suc
+                  }); //aj
+                  //from materialize css
+                  M.toast({
+                    html: 'Successfully Sent'
+                  })
+                } //pr if
+
+              }); //clk
+
+
+            } //suc 
+          }); //aj
+        }); //cl
+
+      } //suc 
+    }); //aj
+
+  }); //cl
+
+
+  //select all as present
+  $("#all").click(function() {
+    $.each($(".chip"), function() {
+      $(this).trigger("click");
+    }); //ech
+  }); //clk
+
+
+  // When the user scrolls down 100px from the top of the document, show the button
+  window.onscroll = function() {
+    scrollFunction()
+  };
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+      document.getElementById("top").style.display = "block";
+    } else {
+      document.getElementById("top").style.display = "none";
+    }
   }
-}
 
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
-  document.body.scrollTop = 0; // For Safari
-  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-}
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
 
-$("#abst").click(function(){
-var ab = [ ];
- $("[value='A']").each(function(){
- ab.push($(this).attr("name"));
- });//ech
- $("#abste").text("");
-for(var i=0;i<ab.length;i++){
-$("#abste").append("<p>"+ab[i]+"</p>");
-}
-//update badge value
- var abbg= ab.length;
-document.getElementById("abg").innerHTML = abbg;
+  $("#abst").click(function() {
+    var ab = [];
+    $("[value='A']").each(function() {
+      ab.push($(this).attr("name"));
+    }); //ech
+    $("#abste").text("");
+    for (var i = 0; i < ab.length; i++) {
+      $("#abste").append("<p>" + ab[i] + "</p>");
+    }
+    //update badge value
+    var abbg = ab.length;
+    document.getElementById("abg").innerHTML = abbg;
 
-});//cl
+  }); //cl
 
-$("#odt").click(function(){
-var od = [ ];
- $("[value='O']").each(function(){
- od.push($(this).attr("name"));
- });//ech 
- $("#odty").text("");
-for(var i=0;i<od.length;i++){
-$("#odty").append("<p>"+od[i]+"</p>");
-}
-//update badge value
- var odbg= od.length;
-document.getElementById("obg").innerHTML = odbg;
+  $("#odt").click(function() {
+    var od = [];
+    $("[value='O']").each(function() {
+      od.push($(this).attr("name"));
+    }); //ech 
+    $("#odty").text("");
+    for (var i = 0; i < od.length; i++) {
+      $("#odty").append("<p>" + od[i] + "</p>");
+    }
+    //update badge value
+    var odbg = od.length;
+    document.getElementById("obg").innerHTML = odbg;
 
-});//cl
+  }); //cl
 
-$("#prs").click(function(){
-var pt = [ ];
- $("[value='P']").each(function(){
- pt.push($(this).attr("name"));
- });//ech 
- $("#prst").text("");
-for(var i=0;i<pt.length;i++){
-$("#prst").append("<p>"+pt[i]+"</p>");
-}
-//update badge value
- var ptbg= pt.length;
-document.getElementById("pbg").innerHTML = ptbg;
+  $("#prs").click(function() {
+    var pt = [];
+    $("[value='P']").each(function() {
+      pt.push($(this).attr("name"));
+    }); //ech 
+    $("#prst").text("");
+    for (var i = 0; i < pt.length; i++) {
+      $("#prst").append("<p>" + pt[i] + "</p>");
+    }
+    //update badge value
+    var ptbg = pt.length;
+    document.getElementById("pbg").innerHTML = ptbg;
 
-});//cl
+  }); //cl
 
-var ttl = document.getElementsByClassName("chip").length;
-//update badges value
-document.getElementById("cbg").innerHTML = ttl;
+  var ttl = document.getElementsByClassName("chip").length;
+  //update badges value
+  document.getElementById("cbg").innerHTML = ttl;
 
-$("#delacc").click(function(e){
- $.ajax({
-    type: "POST",
-    url: 'fl.php',
-    data:{ae:"delaccount"},
-    success: function(data){
-    window.location="timetable.html";
-    }//suc 
-    });//aj
-});//cl
+  $("#delacc").click(function(e) {
+    $.ajax({
+      type: "POST",
+      url: 'main_backend.php',
+      data: {
+        ae: "delaccount"
+      },
+      success: function(data) {
+        window.location = "timetable.html";
+      } //suc 
+    }); //aj
+  }); //cl
 
-if(0==$("article .chip").length){
-$("#sj").hide();
-}
- });//doc
+  if (0 == $("article .chip").length) {
+    $("#sj").hide();
+  }
+ }); //doc
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
