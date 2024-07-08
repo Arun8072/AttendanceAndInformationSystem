@@ -123,19 +123,28 @@ box-shadow:1px 0px 3px orange;
  </div>
 
 <li class="nav-item active"> <a class="nav-link " href="main.php">Attendance</a></li> <li class="nav-item"> <a class="nav-link " href="view.php">View</a> </li> <li class="nav-item "> <a class="nav-link " href="register.php">Register</a> </li> 
-<?php 
-if(date("m")>=06){
-$Y=date("Y");
-}else{
-$Y=date("Y")-1;
-}
-$fi=($Y).($Y)+4;
-$tw=($Y-1).($Y-1)+4;
-$th=($Y-2).($Y-2)+4;
-$fo=($Y-3).($Y-3)+4;
 
-$mfi=$Y.$Y+2;
-$mtw=($Y-1).($Y-1)+2;
+<?php 
+ $ug_duration=4;
+ $pg_duration=2;
+ $semesterDuration=06;
+
+if(date("m")>=$semesterDuration){
+ //current year in semester
+ $currentYear=date("Y");
+}else{
+  //for final semester 
+ $currentYear=date("Y")-1;
+}
+//UG
+// clg year=current year - final year 
+$fi=($currentYear).(($currentYear)+($ug_duration));
+$tw=($currentYear-1).( ($currentYear-1)+($ug_duration) );
+$th=($currentYear-2).( ($currentYear-2)+($ug_duration) );
+$fo=($currentYear-3).( ($currentYear-3)+($ug_duration) );
+//PG
+$mfi=$currentYear.( $currentYear+($pg_duration) );
+$mtw=($currentYear-1).( ($currentYear-1)+($pg_duration) );
 ?>
 
  <form id="snform" method="post">
@@ -501,7 +510,8 @@ else{
         $pr="p6";
         }elseif($time>=date('H:i',strtotime("15:15"))&& $time<date('H:i',strtotime("16:00"))){
         $pr="p7";
-        }elseif($time>=date('H:i',strtotime("16:00"))&& $time<date('H:i',strtotime("21:35"))){
+        }elseif($time>=date('H:i',strtotime("16:00"))&& $time<date('H:i',strtotime("23:35"))){
+          //23:35 changed for development time- after developed change back into 17:30
         $pr="p8";
         }else{ 
        echo  $pr="Timeout";
@@ -518,9 +528,16 @@ if ($result===FALSE) {
  }else if ($result->num_rows>0) {
     // output data of each row
   while($row = $result->fetch_assoc()) {
-//print_r($row);
- $tname=$row[$period];
+    //print_r($row);
+     $classAttending=trim($row[$period]);
+  if ($classAttending!=NULL){
+    $tname=$row[$period];
+  }else {
+    die("Class Not Assigned In This Time");
+  }
+    
     }//wh
+ 
   } else {
      $tname="Timeout";
      }//el
@@ -748,7 +765,7 @@ $("#sw").click(function(){
 
 $("#swap").click(function(e){
 var name=$("#usernm").val()
-var tname="<?php echo $tname; ?>";
+var tname="<?php //echo $tname; ?>";
  e.preventDefault();
  $.ajax({
     type: "POST",
