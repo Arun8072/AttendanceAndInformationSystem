@@ -183,7 +183,7 @@ var btl =$('[name=btl]').val();
 if (zn.length>4 && zd.length>3 && zd.length<7 && bts.length==4 && btl.length==4 && zr.length==12 ){
  $.ajax({
     type: "POST",
-    url: 'fl.php',
+    url: 'register_backend.php',
     data:{Name:zn,sec:zd,reg:zr,bs:bts,bl:btl,a:"create"},
     
     success: function(data){
@@ -207,7 +207,7 @@ var btl =$('[name=btl]').val();
 
  $.ajax({
     type: "POST",
-    url: 'fl.php',
+    url: 'register_backend.php',
     data:{sec:zd,bs:bts,bl:btl,a:"select"},
     success: function(data){
       $("#rc").html(data);
@@ -215,6 +215,18 @@ var btl =$('[name=btl]').val();
     });//aj
   });//clk
   
+$("#delacc").click(function(e) {
+    $.ajax({
+      type: "POST",
+      url: 'register_backend.php',
+      data: {
+        a: "delaccount"
+      },
+      success: function(data) {
+        window.location = "timetable.html";
+      } //suc 
+    }); //aj
+  }); //cl
 
 });//doc
 

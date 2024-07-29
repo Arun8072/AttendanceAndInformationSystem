@@ -88,8 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($Date) && (strlen($tname) > 11 && strlen($tname) < 15) && strlen($_POST['pr']) == 2) {
             echo "success";
             //$conn = new  mysqli($servername, $username, $password,$dbname);
-            $alt = " ALTER TABLE {$tname} ADD COLUMN IF NOT EXISTS {$Date} VARCHAR(20) NOT NULL ";
-
+            $alt = " ALTER TABLE {$tname} ADD COLUMN IF NOT EXISTS {$Date} VARCHAR(20) DEFAULT 'N' ";
+// default value N= null is given to handle the situation : after entered all names in attendance and took attendance yestaday and today now a new student joined ,when entering his name in register it is entered due to column is already created with no default value so we set default to N ,now it is entered with N and we do attendance once for him
             if ($conn->query($alt) === FALSE) {
                 echo "Alter Table-Error : " . $conn->error;
             }
@@ -162,6 +162,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } //if
         
     } // update if
+
+    if(isset($_POST['otpnum'])){
+
     if ("subst" == $_POST['a'] & isset($_POST['otpnum'])) {
         $n = trim($_POST['otpnum']);
         $user = $_SESSION['attusername'];
@@ -173,8 +176,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         else {
             echo "Done";
         }
-
     } //subst
+    
+}
+
+if(isset($_POST['otp'])){
     if ("subfor" == $_POST['a'] & 5 < strlen($_POST['pr']) & isset($_POST['otp'])) {
 
         if ("0" == $_POST['otp'] | 6 < strlen($_POST['otp']) | 4 > strlen($_POST['otp'])) {
@@ -196,6 +202,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
     } // subfor if
+}
+
+
     if ("otphad" == $_POST['a']) {
         $user = $_SESSION['attusername'];
         $pass = $_SESSION['attpassword'];
@@ -214,6 +223,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     } //otphad
+
+
     if ("delotp" == $_POST['a']) {
         $user = $_SESSION['attusername'];
         $pass = $_SESSION['attpassword'];

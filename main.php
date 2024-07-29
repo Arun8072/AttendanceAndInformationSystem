@@ -1051,7 +1051,7 @@ $conn->close();
       type: "POST",
       url: 'main_backend.php',
       data: {
-        ae: "delaccount"
+        a: "delaccount"
       },
       success: function(data) {
         window.location = "timetable.html";
