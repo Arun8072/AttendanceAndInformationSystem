@@ -35,31 +35,55 @@ color:grey;
 button{
 margin:13px;
 }
-.container{
+.container{/*
 margin-left:10%;
-margin-right:12%;
+margin-right:12%;*/
 }
+.btn-small {
+  width:30%;
+  margin:8px;
+  margin-top: 30px;
+}
+.search-section{
+  margin:15px;
+
+}
+.input-field{
+  width: 80%;
+}
+
 </style>
  </head>
 <body>
 
-<div class="row">
+<h5 class="container" style="margin:15px; margin-top: 20px">Search Individual student details</h5>
+<div class="row search-section">
    <!-- Default input --> 
   <form class="form-inline" method="GET" action="search.php">
-  <div class="col s5 input-field">
-  <input class="form-control col-5 m-1" type="search" name="stud" placeholder="Name or Reg No" required>
+  <div class=" s5 input-field">
+  <input class="form-control m-2" type="search" name="stud" placeholder="Name or Reg No" required>
 </div>
-<div class="col s5 input-field">
-<input class="form-control col-5 m-1 autocomplete" type="search" name="class" placeholder="Batch-Class-Section" required></div>
-<div class="col s2">
- <button class="btn btn-small">Search</button></div>
-  </form> </div>
+<div class=" s5 input-field">
+<input class="form-control m-2 autocomplete" type="search" name="class" placeholder="Batch-Class-Section" required></div>
+<div class=" input-field">
+ 
+ <button class="btn-small">Search</button>
 
+</div>
+  </form> 
+</div>
+<hr>
 
 <div id="result" class="container">
 
-<?php  $n=preg_replace('/[^A-z0-9.\s]/', '', trim($_GET["stud"]));
+<?php  
+if (isset($_GET["stud"])){
+$n=preg_replace('/[^A-z0-9.\s]/', '', trim($_GET["stud"]));
  $c=preg_replace('/[^A-Za-z0-9]/', '',strtoupper($_GET["class"]));
+ $gotValues=true;
+}else{
+  $gotValues=false;
+}
 
 $servername = "localhost";
 $username = "root";
@@ -74,22 +98,26 @@ if ($conn->connect_error) {
    die("<br>Connection failed: "  . $conn->connect_error);
 }
 
-echo '​<table class="striped  centered"><thead>
+echo '​<table class="striped  left"><thead>
 <tr> <th>Date</th> <th>Status</th> <th>Staff</th> </tr>
 </thead> <tbody>';
 
+if($gotValues==true){
 $sql = "select * from $c where RegisterNumber='$n' or Name='$n' or RegisterNumber='1' ";
+
 $result = $conn->query($sql);
+
 //data of appropriate table
 $sqc = "SELECT column_name from information_schema.columns where table_schema='Attendance' and table_name='$c' ";
 $res = $conn->query($sqc);
 //column name of the appropriate table from information_schema.columns
 //echo $conn->error;
+
 if ($result->num_rows > 0) {
 //fetching the detail of who takes attendance
 $staff = $result->fetch_array();
 //$count=$result->field_count;
- $row = $result->fetch_array();
+  $row = $result->fetch_array();
 //column is not idetifiable so fetch_array is used instead of associative array 
 $i=-1;
 while ($col = $res->fetch_array()){
@@ -101,7 +129,11 @@ echo '<tr> <td>'.$col[0].'</td> <td class="sr">';
 if("P"==$row[$i]){ echo "Present"; 
 }elseif("A"==$row[$i]){ echo "Absent";
 }elseif("O"==$row[$i]){ echo "OnDuty"; }
-else{ echo $row[$i]; }
+elseif("N"==$row[$i]){ echo "NULL"; }
+else{
+ //echo $row[$i]; 
+echo "unknown";
+}
 echo '</td> <td class="sr">'.$staff[$i].'</td> </tr>';
 //column name as col and data as row
 //$i++;
@@ -115,6 +147,7 @@ else{
 
 echo '</tbody> </table>';
 
+}//if got values
 ?>
 
 </div>

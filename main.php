@@ -496,7 +496,8 @@ if (isset($_POST['submit']) ) {
 }//if
 else{
         $day= date('D');
-        $time=date('H:i'); if($time>=date('H:i',strtotime("09:00"))&& $time<date('H:i',strtotime("10:00"))){
+        $time=date('H:i'); 
+        if($time>=date('H:i',strtotime("09:00"))&& $time<date('H:i',strtotime("10:00"))){
         $pr="p1";
         }elseif($time>=date('H:i',strtotime("10:00"))&& $time<date('H:i',strtotime("11:15"))){
         $pr="p2";
@@ -522,10 +523,11 @@ else{
  	    $period=($day).($pr);
 
    		 $sql = "SELECT {$period} FROM Staff WHERE username='{$user}' AND password='{$pass}' ";
- $result = $conn->query($sql);
+  $result = $conn->query($sql);
 if ($result===FALSE) {
  echo "<br>Select-Error : " .$conn->error;
  }else if ($result->num_rows>0) {
+  $hasClass=true;
     // output data of each row
   while($row = $result->fetch_assoc()) {
     //print_r($row);
@@ -533,7 +535,8 @@ if ($result===FALSE) {
   if ($classAttending!=NULL){
     $tname=$row[$period];
   }else {
-    die("Class Not Assigned In This Time");
+    echo ("Class Not Assigned In This Time");
+    $hasClass=false;
   }
     
     }//wh
@@ -549,7 +552,9 @@ echo'<span id="cbg"  class="badge"></span>
 </h6><br> ';
 
  $sql = "SELECT Name,RegisterNumber FROM {$tname} WHERE RegisterNumber!='1' ";
+if ($hasClass!=FALSE) {
  $result = $conn->query($sql);
+}
  if ($result==FALSE) {
  echo "<br>Select-Error : " .$conn->error;
   }else if($result->num_rows > 0){
@@ -566,6 +571,8 @@ echo'</div>';
 }//if
 $conn->close();
 ?>  
+
+
 <!-- 
   <div id="modal1" class="modal">
     <div class="modal-content">
@@ -580,6 +587,8 @@ $conn->close();
       <p id="close" class="modal-close waves-effect btn-flat">Close</p>
     </div>
   </div>  -->
+
+
   <!-- Modal Structure -->
   <div id="modal2" class="modal">
     <div class="modal-content">
