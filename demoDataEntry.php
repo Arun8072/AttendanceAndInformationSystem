@@ -197,13 +197,6 @@ for ($loopvar1=0; $loopvar1 < count($allYear); $loopvar1++) {
                 echo "\n Something Went Wrong , Please Try Again/Later \n";
                 echo $sqlt->error;
             }
-
-            $sqlt->close();
-        
-
-        
-    
-
    
 
     
