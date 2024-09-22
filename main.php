@@ -101,18 +101,242 @@ color:grey;
 *{
 box-shadow:1px 0px 3px orange;
 }*/
+header, main, footer {
+      padding-left: 300px;
+    }
 
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
 </style>
 
 </head>
 
 <body>
 
+<main>
+
 <!--changing the width using js-->
   <div id="pb" class="progress-bar bg-success fixed-top" role="progressbar" style="width:0%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 
+ <!-- Nav tabs -->
+<div class="">
+  <ul id="sc" class="nav nav-tabs bg-light sticky-top" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#home">Class </a>
+    </li>
+    <li class="nav-item">
+      <a id="abst" class="nav-link" data-toggle="tab" href="#menu1">Absentees</a>
+    </li>
+    <li id="odt" class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu2">OnDuty</a>
+    </li>
+   <li id="prs" class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu3">Present</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <span class="tab-content">
+    <div id="home" class=" tab-pane active"><br>
+<!-- Class name and badge included in ch.php  -->
+<article class="clearfix">
+
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "Attendance";
+
+// Create connection
+$conn = new  mysqli($servername, $username, $password,$dbname);
+
+// Check connection
+if ($conn->connect_error) {
+   die("<br>Connection failed: "  . $conn->connect_error);
+}
+$tname="";
+if (isset($_POST['submit']) ) {
+    $tname=$_POST['submit'];
+}//if
+else{
+        $day= date('D');
+        $time=date('H:i'); 
+        if($time>=date('H:i',strtotime("09:00"))&& $time<date('H:i',strtotime("10:00"))){
+        $pr="p1";
+        }elseif($time>=date('H:i',strtotime("10:00"))&& $time<date('H:i',strtotime("11:15"))){
+        $pr="p2";
+        }elseif($time>=date('H:i',strtotime("11:15"))&& $time<date('H:i',strtotime("12:00"))){
+        $pr="p3";
+        }elseif($time>=date('H:i',strtotime("12:00"))&& $time<date('H:i',strtotime("13:30"))){
+        $pr="p4";
+        }elseif($time>=date('H:i',strtotime("13:30"))&& $time<date('H:i',strtotime("14:15"))){
+        $pr="p5";
+        }elseif($time>=date('H:i',strtotime("14:15"))&& $time<date('H:i',strtotime("15:15"))){
+        $pr="p6";
+        }elseif($time>=date('H:i',strtotime("15:15"))&& $time<date('H:i',strtotime("16:00"))){
+        $pr="p7";
+        }elseif($time>=date('H:i',strtotime("16:00"))&& $time<date('H:i',strtotime("23:35"))){
+          //23:35 changed for development time- after developed change back into 17:30
+        $pr="p8";
+        }else{ 
+       echo  $pr="Timeout";
+       // die("Timeout");
+        }
+      $user=$_SESSION['attusername'];
+      $pass=$_SESSION['attpassword'];
+      if ($day=="Sun") {
+         $notSunday=false;
+         $period=null;
+         $hasClass=false;
+         echo "Sunday No Classes";
+      }else{
+        $notSunday=true;
+        $period=($day).($pr);
+      }
+ 	    
+
+   		 $sql = "SELECT {$period} FROM Staff WHERE username='{$user}' AND password='{$pass}' ";
+  if ($notSunday) {
+    $result = $conn->query($sql);
+  }else{
+    $result=FALSE;
+  }
+  
+if ($result===FALSE) {
+// echo "<br>Select-Error : " .$conn->error;
+ }else if ($result->num_rows>0) {
+  $hasClass=true;
+    // output data of each row
+  while($row = $result->fetch_assoc()) {
+    //print_r($row);
+     $classAttending=trim($row[$period]);
+  if ($classAttending!=NULL){
+    $tname=$row[$period];
+  }else {
+    echo ("Class Not Assigned In This Time");
+    $hasClass=false;
+  }
+    
+    }//wh
+ 
+  } else {
+     $tname="Timeout";
+     }//el
+}//el
+
+  echo '<h6 class="container">';
+  echo strtoupper($tname);
+echo'<span id="cbg"  class="badge"></span>
+</h6><br> ';
+
+ $sql = "SELECT Name,RegisterNumber FROM {$tname} WHERE RegisterNumber!='1' ";
+if ($hasClass!=FALSE) {
+ $result = $conn->query($sql);
+}
+ if ($result==FALSE) {
+ //echo "<br>Select-Error : " .$conn->error;
+  }else if($result->num_rows > 0){
+while($row = $result->fetch_assoc()) { 
+  echo "\n";
+ //make align one by one in portrait and float right in landscape mode
+echo '<div class="d-inline-flex p-2 mw" >';
+    echo ' <div class="chip border" name="'.$row["Name"].'"  reg="'.$row["RegisterNumber"].' "> ';
+ echo '<i class="material-icons od">person</i>';
+  echo $row["Name"];
+  echo '</div>';
+echo'</div>';
+}//wh
+}//if
+$conn->close();
+?>  
+
+
+<!-- 
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h5>Swap Class</h5>
+  <div id="swu" class="row"> </div>
+<form><input type="text" id="usernm" class="form-control" placeholder="Username" pattern="[a-zA-Z0-9\s.]{6,20}" >  
+   <button id="swap" type="submit" class="btn waves-effect waves-teal btn-flat">Allow</button></form> 
+   <h5>Swapped Class</h5>
+ <form id="swapped" method="POST"> </form>
+    </div>
+    <div class="modal-footer">
+      <p id="close" class="modal-close waves-effect btn-flat">Close</p>
+    </div>
+  </div>  -->
+
+
+  <!-- Modal Structure -->
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <h5>Swap Class</h5>
+  <div id="otphad" class="row"> </div>
+<form><input type="number" id="otpnum" class="form-control" pattern="[0-9]{4,6}"  placeholder="Number">  
+ <button id="subal" type="submit" class="btn waves-effect waves-teal btn-flat">Allow</button> <button id="subgt" type="submit" class="btn waves-effect waves-teal btn-flat right">Request</button></form> 
+   <h5>Swapped Class</h5>
+ <form id="subfor" method="POST"> </form>
+     </div>    <!--   -->
+    <div class="modal-footer">
+      <p class="modal-close waves-effect btn-flat">Close</p>
+    </div><!--  -->
+  </div><!--modal -->
+  <!-- Modal Structure -->
+  <div id="modal3" class="modal">
+    <div class="modal-content">
+      <h5>Redo</h5>
+  <div id="min"> 
+
+  </div> 
+  </div>  
+    <div class="modal-footer">
+      <p class="modal-close waves-effect btn-flat">Close</p>
+    </div><!-- -->
+  </div><!--modal -->
+   
+  
+      <!--FAB-->
+<div class="fixed-action-btn  toolbar">
+<!-- class="btn-large red"-->
+  <a class="btn-floating">
+  <!--class="large"-->
+    <i class="large material-icons">mode_edit</i>
+  </a>
+  <ul>
+ <li><a id="subi" class="btn-floating" ><i class="material-icons modal-trigger" href="#modal2">swap_horiz</i></a></li>
+  <li><a id="redo" class="btn-floating" ><i class="material-icons modal-trigger" href="#modal3">update</i></a></li>
+<li><a id="all" class="btn-floating"><i class="material-icons">playlist_add_check</i></a></li>
+    <li><a onclick="topFunction()" id="top" class="btn-floating" ><i class="material-icons">publish</i></a></li>
+  </ul>
+</div>
+
+</article>
+<br><br>
+<button id="sj" class="btn btn-lg btn-block" btntype="submit">Submit</button>
+    </div><!--tab1-->
+    
+    <div id="menu1" class="container tab-pane fade">
+      <h4>Absentees <span id="abg"  class="badge"> </span></h4>
+      <p id="abste" style="word-break: break-all;"> </p>
+    </div>
+    <div id="menu2" class="container tab-pane fade">
+      <h4>OnDuty <span id="obg"  class="badge"> </span></h4>
+      <p id="odty" style="word-break: break-all;" > </p>
+    </div>
+   <div id="menu3" class="container tab-pane fade">
+      <h4>Present <span id="pbg"  class="badge"> </span></h4>
+      <p id="prst" style="word-break: break-all;" > </p>
+    </div>
+  </span>
+</div>
+​         
+</main>
+
+
 <!--side Nav -->
- <ul id="slide-out" class="sidenav fixed ">
+ <ul id="slide-out" class="sidenav sidenav-fixed ">
  <div class="user-view">
       <div class="background">
         <img src="images/imgt.jpg">
@@ -452,220 +676,12 @@ $mtw=($currentYear-1).( ($currentYear-1)+($pg_duration) );
  </li><!--acc child-->
  
          </ul><!--col acc-->
-  	   </li> <!--no pad-->
+       </li> <!--no pad-->
          </ul><!--col acc-->
-
- <!-- Nav tabs -->
-<div class="">
-  <ul id="sc" class="nav nav-tabs bg-light sticky-top" role="tablist">
-    <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#home">Class </a>
-    </li>
-    <li class="nav-item">
-      <a id="abst" class="nav-link" data-toggle="tab" href="#menu1">Absentees</a>
-    </li>
-    <li id="odt" class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#menu2">OnDuty</a>
-    </li>
-   <li id="prs" class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#menu3">Present</a></li>
-  </ul>
-
-  <!-- Tab panes -->
-  <span class="tab-content">
-    <div id="home" class=" tab-pane active"><br>
-<!-- Class name and badge included in ch.php  -->
-<article class="clearfix">
-
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "Attendance";
-
-// Create connection
-$conn = new  mysqli($servername, $username, $password,$dbname);
-
-// Check connection
-if ($conn->connect_error) {
-   die("<br>Connection failed: "  . $conn->connect_error);
-}
-$tname="";
-if (isset($_POST['submit']) ) {
-    $tname=$_POST['submit'];
-}//if
-else{
-        $day= date('D');
-        $time=date('H:i'); 
-        if($time>=date('H:i',strtotime("09:00"))&& $time<date('H:i',strtotime("10:00"))){
-        $pr="p1";
-        }elseif($time>=date('H:i',strtotime("10:00"))&& $time<date('H:i',strtotime("11:15"))){
-        $pr="p2";
-        }elseif($time>=date('H:i',strtotime("11:15"))&& $time<date('H:i',strtotime("12:00"))){
-        $pr="p3";
-        }elseif($time>=date('H:i',strtotime("12:00"))&& $time<date('H:i',strtotime("13:30"))){
-        $pr="p4";
-        }elseif($time>=date('H:i',strtotime("13:30"))&& $time<date('H:i',strtotime("14:15"))){
-        $pr="p5";
-        }elseif($time>=date('H:i',strtotime("14:15"))&& $time<date('H:i',strtotime("15:15"))){
-        $pr="p6";
-        }elseif($time>=date('H:i',strtotime("15:15"))&& $time<date('H:i',strtotime("16:00"))){
-        $pr="p7";
-        }elseif($time>=date('H:i',strtotime("16:00"))&& $time<date('H:i',strtotime("23:35"))){
-          //23:35 changed for development time- after developed change back into 17:30
-        $pr="p8";
-        }else{ 
-       echo  $pr="Timeout";
-       // die("Timeout");
-        }
-      $user=$_SESSION['attusername'];
-      $pass=$_SESSION['attpassword'];
-      if ($day=="Sun") {
-         $notSunday=false;
-         $period=null;
-         $hasClass=false;
-         echo "Sunday No Classes";
-      }else{
-        $notSunday=true;
-        $period=($day).($pr);
-      }
- 	    
-
-   		 $sql = "SELECT {$period} FROM Staff WHERE username='{$user}' AND password='{$pass}' ";
-  if ($notSunday) {
-    $result = $conn->query($sql);
-  }else{
-    $result=FALSE;
-  }
-  
-if ($result===FALSE) {
-// echo "<br>Select-Error : " .$conn->error;
- }else if ($result->num_rows>0) {
-  $hasClass=true;
-    // output data of each row
-  while($row = $result->fetch_assoc()) {
-    //print_r($row);
-     $classAttending=trim($row[$period]);
-  if ($classAttending!=NULL){
-    $tname=$row[$period];
-  }else {
-    echo ("Class Not Assigned In This Time");
-    $hasClass=false;
-  }
-    
-    }//wh
- 
-  } else {
-     $tname="Timeout";
-     }//el
-}//el
-
-  echo '<h6 class="container">';
-  echo strtoupper($tname);
-echo'<span id="cbg"  class="badge"></span>
-</h6><br> ';
-
- $sql = "SELECT Name,RegisterNumber FROM {$tname} WHERE RegisterNumber!='1' ";
-if ($hasClass!=FALSE) {
- $result = $conn->query($sql);
-}
- if ($result==FALSE) {
- //echo "<br>Select-Error : " .$conn->error;
-  }else if($result->num_rows > 0){
-while($row = $result->fetch_assoc()) { 
-  echo "\n";
- //make align one by one in portrait and float right in landscape mode
-echo '<div class="d-inline-flex p-2 mw" >';
-    echo ' <div class="chip border" name="'.$row["Name"].'"  reg="'.$row["RegisterNumber"].' "> ';
- echo '<i class="material-icons od">person</i>';
-  echo $row["Name"];
-  echo '</div>';
-echo'</div>';
-}//wh
-}//if
-$conn->close();
-?>  
+         
 
 
-<!-- 
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <h5>Swap Class</h5>
-  <div id="swu" class="row"> </div>
-<form><input type="text" id="usernm" class="form-control" placeholder="Username" pattern="[a-zA-Z0-9\s.]{6,20}" >  
-   <button id="swap" type="submit" class="btn waves-effect waves-teal btn-flat">Allow</button></form> 
-   <h5>Swapped Class</h5>
- <form id="swapped" method="POST"> </form>
-    </div>
-    <div class="modal-footer">
-      <p id="close" class="modal-close waves-effect btn-flat">Close</p>
-    </div>
-  </div>  -->
 
-
-  <!-- Modal Structure -->
-  <div id="modal2" class="modal">
-    <div class="modal-content">
-      <h5>Swap Class</h5>
-  <div id="otphad" class="row"> </div>
-<form><input type="number" id="otpnum" class="form-control" pattern="[0-9]{4,6}"  placeholder="Number">  
- <button id="subal" type="submit" class="btn waves-effect waves-teal btn-flat">Allow</button> <button id="subgt" type="submit" class="btn waves-effect waves-teal btn-flat right">Request</button></form> 
-   <h5>Swapped Class</h5>
- <form id="subfor" method="POST"> </form>
-     </div>    <!--   -->
-    <div class="modal-footer">
-      <p class="modal-close waves-effect btn-flat">Close</p>
-    </div><!--  -->
-  </div><!--modal -->
-  <!-- Modal Structure -->
-  <div id="modal3" class="modal">
-    <div class="modal-content">
-      <h5>Redo</h5>
-  <div id="min"> 
-
-  </div> 
-  </div>  
-    <div class="modal-footer">
-      <p class="modal-close waves-effect btn-flat">Close</p>
-    </div><!-- -->
-  </div><!--modal -->
-   
-  
-      <!--FAB-->
-<div class="fixed-action-btn  toolbar">
-<!-- class="btn-large red"-->
-  <a class="btn-floating">
-  <!--class="large"-->
-    <i class="large material-icons">mode_edit</i>
-  </a>
-  <ul>
- <li><a id="subi" class="btn-floating" ><i class="material-icons modal-trigger" href="#modal2">swap_horiz</i></a></li>
-  <li><a id="redo" class="btn-floating" ><i class="material-icons modal-trigger" href="#modal3">update</i></a></li>
-<li><a id="all" class="btn-floating"><i class="material-icons">playlist_add_check</i></a></li>
-    <li><a onclick="topFunction()" id="top" class="btn-floating" ><i class="material-icons">publish</i></a></li>
-  </ul>
-</div>
-
-</article>
-<br><br>
-<button id="sj" class="btn btn-lg btn-block" btntype="submit">Submit</button>
-    </div><!--tab1-->
-    
-    <div id="menu1" class="container tab-pane fade">
-      <h4>Absentees <span id="abg"  class="badge"> </span></h4>
-      <p id="abste" style="word-break: break-all;"> </p>
-    </div>
-    <div id="menu2" class="container tab-pane fade">
-      <h4>OnDuty <span id="obg"  class="badge"> </span></h4>
-      <p id="odty" style="word-break: break-all;" > </p>
-    </div>
-   <div id="menu3" class="container tab-pane fade">
-      <h4>Present <span id="pbg"  class="badge"> </span></h4>
-      <p id="prst" style="word-break: break-all;" > </p>
-    </div>
-  </span>
-</div>
-​         
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

@@ -51,11 +51,20 @@ margin-right:12%;*/
 .input-field{
   width: 80%;
 }
+header, main, footer {
+      padding-left: 300px;
+    }
 
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
 </style>
  </head>
 <body>
 
+<main>
 <h5 class="container" style="margin:15px; margin-top: 20px">Search Individual Student Details</h5>
 <div class="row search-section">
    <!-- Default input --> 
@@ -151,15 +160,15 @@ echo '</tbody> </table>';
 ?>
 
 </div>
-
+</main>
 <!--side Nav -->
-  <ul id="slide-out" class="sidenav fixed">
+  <ul id="slide-out" class="sidenav sidenav-fixed">
  <div class="user-view">
       <div class="background">
         <img src="images/imgt.jpg">
       </div>
  <h6 class="white-text"> <?php echo $_SESSION['attusername']; ?></h6> 
- <div id="ru" class="row"> <p><a href = "logout.php">Sign Out</a> </p>  <p id="delacc">Delete Account</p>
+ <div id="ru" class="row"> <p><a href = "logout.php">Sign Out</a> <a id="delacc">Delete Account</a></p>
 </div>
  </div>
              
@@ -184,6 +193,9 @@ $("tbody tr").filter(function(){
  $(this).toggle($(this).text().toLowerCase().indexOf(txt)>-1);
  }); //fl
 }); //clk
+
+
+// implement delete acccount feature
 
 }); //doc
 </script>

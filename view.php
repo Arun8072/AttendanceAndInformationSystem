@@ -46,12 +46,20 @@ overflow: auto;
 .bor:hover{
 width:90px;
 }
+header, main, footer {
+      padding-left: 300px;
+    }
 
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
 </style>
  </head>
 <body>
 
-
+<main>
     <ul class="nav nav-tabs">
     <li class="nav-item">
         <a href="#prct" class="nav-link" data-toggle="tab">Percentage</a>
@@ -1107,9 +1115,11 @@ $mfi = $currentYear . ($currentYear + $pg_duration);
 $mtw = $currentYear - 1 . ($currentYear - 1 + $pg_duration);
 ?>
 
+</main>
+
 <!-- main navbar of sidenav deleted for design-->
 <!--side Nav-->
- <ul id="slide-out" class="sidenav fixed">
+ <ul id="slide-out" class="sidenav sidenav-fixed">
  
  <div class="user-view">
       <div class="background">

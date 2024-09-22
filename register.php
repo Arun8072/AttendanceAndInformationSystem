@@ -70,10 +70,20 @@ position:absolute;
 right:0px;
 color:grey;
 }
+header, main, footer {
+      padding-left: 300px;
+    }
+
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
 </style>
  
  </head>
 <body>
+  <main>
   <div class="container">
   <br>
   
@@ -154,8 +164,28 @@ color:grey;
    </div>
  </div>
 
+
+
+   <!-- btn-primary -->
+
+<!-- Modal Trigger -->
+  <button id="li" class="waves-effect waves-light btn modal-trigger btn-lg btn-block" href="#modal1">Last inserted</button>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>Recent records</h4>
+      <span id="rc"></span>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+
+
+</main>
 <!--side Nav -->
-  <ul id="slide-out" class="sidenav fixed">
+  <ul id="slide-out" class="sidenav sidenav-fixed">
  <div class="user-view">
       <div class="background">
         <img src="images/imgt.jpg">
@@ -246,21 +276,6 @@ M.AutoInit();
 </script>
 
 
-   <!-- btn-primary -->
-
-<!-- Modal Trigger -->
-  <button id="li" class="waves-effect waves-light btn modal-trigger btn-lg btn-block" href="#modal1">Last inserted</button>
-
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal bottom-sheet">
-    <div class="modal-content">
-      <h4>Recent records</h4>
-      <span id="rc"></span>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
-    </div>
-  </div>
      
 </body>
 </html>
