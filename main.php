@@ -520,12 +520,26 @@ else{
         }
       $user=$_SESSION['attusername'];
       $pass=$_SESSION['attpassword'];
- 	    $period=($day).($pr);
+      if ($day=="Sun") {
+         $notSunday=false;
+         $period=null;
+         $hasClass=false;
+         echo "Sunday No Classes";
+      }else{
+        $notSunday=true;
+        $period=($day).($pr);
+      }
+ 	    
 
    		 $sql = "SELECT {$period} FROM Staff WHERE username='{$user}' AND password='{$pass}' ";
-  $result = $conn->query($sql);
+  if ($notSunday) {
+    $result = $conn->query($sql);
+  }else{
+    $result=FALSE;
+  }
+  
 if ($result===FALSE) {
- echo "<br>Select-Error : " .$conn->error;
+// echo "<br>Select-Error : " .$conn->error;
  }else if ($result->num_rows>0) {
   $hasClass=true;
     // output data of each row
@@ -556,7 +570,7 @@ if ($hasClass!=FALSE) {
  $result = $conn->query($sql);
 }
  if ($result==FALSE) {
- echo "<br>Select-Error : " .$conn->error;
+ //echo "<br>Select-Error : " .$conn->error;
   }else if($result->num_rows > 0){
 while($row = $result->fetch_assoc()) { 
   echo "\n";

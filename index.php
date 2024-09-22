@@ -44,7 +44,7 @@ if ($result->num_rows > 0) {
          header("location:main.php");
        }//p if
        else{
-      $Error="UsernameorPassword may be incorrect";
+      $Error="Usernameor Password may be incorrect";
       }
          $conn->close();
      }//u if

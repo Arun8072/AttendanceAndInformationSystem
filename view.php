@@ -127,12 +127,15 @@ width:90px;
             $pr = "p8";
         } else {
             //$pr = "Timeout";
-            $day = "Sat";
+            
             $pr= "p8";
         }
         $user = $_SESSION["attusername"];
         $pass = $_SESSION["attpassword"];
-        $period = $day . "$pr";
+         if ($day=="Sun") {
+         $day = "Sat";
+      }
+         $period = $day . "$pr";
         $sql = "SELECT {$period} FROM Staff WHERE username='{$user}' AND password='{$pass}' ";
         $result = $conn->query($sql);
         /*if ($result===FALSE) {
@@ -171,7 +174,7 @@ width:90px;
     $mfi = $currentYear . ($currentYear + $pg_duration);
     $mtw = $currentYear - 1 . ($currentYear - 1 + $pg_duration);
 
-    $dep = substr($tname, 8, 3);
+     $dep =  substr($tname, 8, -1);
     $tname1a = $fi . $dep . "A";
     $tname1b = $fi . $dep . "B";
     $tname2a = $tw . $dep . "A";
@@ -375,6 +378,7 @@ if ($result === false) {
     echo "<td>  </td>";
 }
 }
+
 $sql = "SELECT COUNT(Name) AS tl FROM {$tname1b} WHERE RegisterNumber!='1' ";
 $tl = $conn->query($sql);
 $sql = "SELECT COUNT(Name) AS pr FROM {$tname1b} WHERE {$dp1}='P' AND RegisterNumber!='1' ";

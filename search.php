@@ -56,7 +56,7 @@ margin-right:12%;*/
  </head>
 <body>
 
-<h5 class="container" style="margin:15px; margin-top: 20px">Search Individual student details</h5>
+<h5 class="container" style="margin:15px; margin-top: 20px">Search Individual Student Details</h5>
 <div class="row search-section">
    <!-- Default input --> 
   <form class="form-inline" method="GET" action="search.php">
