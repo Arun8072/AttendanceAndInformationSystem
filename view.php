@@ -1488,10 +1488,12 @@ $mtw = $currentYear - 1 . ($currentYear - 1 + $pg_duration);
  <ul>
    <li>
  <?php //selected dept is get as value to cookie
-
+if (isset($_GET["dept"])) {
+   $d=$_GET["dept"];
+}else{$d=null;}
 echo '<div class="col-12">
   <input type="text" class="form-control input-sm" placeholder="Department" name=ckie value="' .
-     $_GET["dept"] .
+     $d .
      '" >
   </div>
   <div class="col-6">
@@ -1510,11 +1512,11 @@ echo '<div class="col-12">
     <form class="col s12">
       <div class="row">
 <div class="input-field col s6">
-<label for="frdt">from date</label>
+<label for="frdt">From Date</label>
       <input type="text" id="frdt" class="datepicker">
 </div>
 <div class="input-field col s6">
-<label for="todt">to date</label>
+<label for="todt">To Date</label>
        <input type="text" id="todt" class="datepicker">
 </div>
       </div>

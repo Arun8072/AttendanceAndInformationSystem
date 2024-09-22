@@ -195,8 +195,20 @@ $("tbody tr").filter(function(){
 }); //clk
 
 
-// implement delete acccount feature
 
+  $("#delacc").click(function(e) {
+    $.ajax({
+      type: "POST",
+      url: 'main_backend.php',
+      data: {
+        a: "delaccount"
+      },
+      success: function(data) {
+        window.location = "timetable.html";
+      } //suc 
+    }); //aj
+  }); //cl
+  
 }); //doc
 </script>
 
