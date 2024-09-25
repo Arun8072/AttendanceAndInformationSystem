@@ -186,10 +186,12 @@ else{
         }
       $user=$_SESSION['attusername'];
       $pass=$_SESSION['attpassword'];
+      $hasClass=false;
+      
       if ($day=="Sun") {
          $notSunday=false;
          $period=null;
-         $hasClass=false;
+         // $hasClass=false;
          echo "Sunday No Classes";
       }else{
         $notSunday=true;
