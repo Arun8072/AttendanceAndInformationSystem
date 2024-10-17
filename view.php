@@ -397,7 +397,7 @@ $sql = "SELECT COUNT(Name) AS od FROM {$tname1b} WHERE {$dp1}='O' AND RegisterNu
 $od = $conn->query($sql);
 
 if ($tl->num_rows > 0) {
-  if ($pr === false|| $abs === false || $od === false ) {
+  if ($pr === false|| $ab === false || $od === false ) {
   //echo $conn->error;
   }else{
     if ($pr->num_rows > 0 || $ab->num_rows > 0 || $od->num_rows > 0) {
@@ -486,7 +486,7 @@ $sql = "SELECT COUNT(Name) AS od FROM {$tname2a} WHERE {$dp1}='O' AND RegisterNu
 $od = $conn->query($sql);
 
 if ($tl->num_rows > 0) {
-   if ($pr === false|| $abs === false || $od === false ) {
+   if ($pr === false|| $ab === false || $od === false ) {
   //echo $conn->error;
   }else{
     if ($pr->num_rows > 0 || $ab->num_rows > 0 || $od->num_rows > 0) {
@@ -576,7 +576,7 @@ if ($tl === false) {
   //echo $conn->error;
 }else{
 if ($tl->num_rows > 0) {
-  if ($pr === false|| $abs === false || $od === false ) {
+  if ($pr === false|| $ab === false || $od === false ) {
   //echo $conn->error;
   }else{
     if ($pr->num_rows > 0 || $ab->num_rows > 0 || $od->num_rows > 0) {
@@ -666,7 +666,7 @@ if ($tl === false) {
   //echo $conn->error;
 }else{
 if ($tl->num_rows > 0) {
-  if ($pr === false|| $abs === false || $od === false ) {
+  if ($pr === false|| $ab === false || $od === false ) {
   //echo $conn->error;
   }else{
     if ($pr->num_rows > 0 || $ab->num_rows > 0 || $od->num_rows > 0) {
@@ -756,7 +756,7 @@ if ($tl === false) {
   //echo $conn->error;
 }else{
 if ($tl->num_rows > 0) {
-  if ($pr === false|| $abs === false || $od === false ) {
+  if ($pr === false|| $ab === false || $od === false ) {
   //echo $conn->error;
   }else{
     if ($pr->num_rows > 0 || $ab->num_rows > 0 || $od->num_rows > 0) {
@@ -847,7 +847,7 @@ if ($tl === false) {
   //echo $conn->error;
 }else{
 if ($tl->num_rows > 0) {
-  if ($pr === false|| $abs === false || $od === false ) {
+  if ($pr === false|| $ab === false || $od === false ) {
   //echo $conn->error;
   }else{
     if ($pr->num_rows > 0 || $ab->num_rows > 0 || $od->num_rows > 0) {
@@ -937,7 +937,7 @@ if ($tl === false) {
   //echo $conn->error;
 }else{
 if ($tl->num_rows > 0) {
-  if ($pr === false|| $abs === false || $od === false ) {
+  if ($pr === false|| $ab === false || $od === false ) {
   //echo $conn->error;
   }else{
     if ($pr->num_rows > 0 || $ab->num_rows > 0 || $od->num_rows > 0) {
