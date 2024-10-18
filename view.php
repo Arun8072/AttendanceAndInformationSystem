@@ -39,13 +39,20 @@ box-shadow:1px 0px 3px orange;
 box-shadow:0px 0px 2px grey;
 padding:3px;
 font-size:12px;
-width:14px;
-transition: width 1s;
-overflow: auto;
+width:100%;
 }
 .bor:hover{
+/*width:90px;*/
+}
+ @media only screen and (max-width : 992px) {
+      .bor{
+        width:14px;
+        overflow:hidden;
+      }
+      .bor:hover{
 width:90px;
 }
+    }
 header, main, footer {
       padding-left: 300px;
     }
