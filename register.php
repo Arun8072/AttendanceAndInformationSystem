@@ -27,7 +27,7 @@ if(!isset($_SESSION['attusername'])){
 }
 
 body {
- background:  url("images/imgg.png") no-repeat center fixed;
+ background:  url("images/bg_add.jpg") no-repeat center fixed;
  background-color: #ffffff;
  
 height: 500px; /* You must set a specified height */
@@ -156,7 +156,7 @@ header, main, footer {
   </div> <!--  -->
              <div class="panel-footer">
         <!--   btn-primary -->
-                   <button id="submit" type="submit" class="btn "  value="Submit">Submit</button>
+                   <button id="submit" type="submit" class="btn blue darken-1"  value="Submit">Submit</button>
              </div>
          </form>
      </div>
@@ -169,7 +169,7 @@ header, main, footer {
    <!-- btn-primary -->
 
 <!-- Modal Trigger -->
-  <button id="li" class="waves-effect waves-light btn modal-trigger btn-lg btn-block" href="#modal1">Last inserted</button>
+  <button id="li" class="waves-effect waves-light btn modal-trigger btn-lg btn-block blue darken-1" href="#modal1">Last inserted</button>
 
   <!-- Modal Structure -->
   <div id="modal1" class="modal bottom-sheet">

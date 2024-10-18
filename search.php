@@ -76,7 +76,7 @@ header, main, footer {
 <input class="form-control m-2 autocomplete" type="search" name="class" placeholder="Batch-Class-Section" required></div>
 <div class=" input-field">
  
- <button class="btn-small">Search</button>
+ <button class="btn-small blue darken-1">Search</button>
 
 </div>
   </form> 

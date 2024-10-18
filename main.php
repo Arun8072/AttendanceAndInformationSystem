@@ -302,21 +302,21 @@ $conn->close();
       <!--FAB-->
 <div class="fixed-action-btn  toolbar">
 <!-- class="btn-large red"-->
-  <a class="btn-floating">
+  <a class="btn-floating blue darken-1">
   <!--class="large"-->
     <i class="large material-icons">mode_edit</i>
   </a>
   <ul>
- <li><a id="subi" class="btn-floating" ><i class="material-icons modal-trigger" href="#modal2">swap_horiz</i></a></li>
-  <li><a id="redo" class="btn-floating" ><i class="material-icons modal-trigger" href="#modal3">update</i></a></li>
-<li><a id="all" class="btn-floating"><i class="material-icons">playlist_add_check</i></a></li>
-    <li><a onclick="topFunction()" id="top" class="btn-floating" ><i class="material-icons">publish</i></a></li>
+ <li><a id="subi" class="btn-floating blue darken-1" ><i class="material-icons modal-trigger" href="#modal2">swap_horiz</i></a></li>
+  <li><a id="redo" class="btn-floating blue darken-1" ><i class="material-icons modal-trigger" href="#modal3">update</i></a></li>
+<li><a id="all" class="btn-floating blue darken-1"><i class="material-icons">playlist_add_check</i></a></li>
+    <li><a onclick="topFunction()" id="top" class="btn-floating blue darken-1" ><i class="material-icons">publish</i></a></li>
   </ul>
 </div>
 
 </article>
 <br><br>
-<button id="sj" class="btn btn-lg btn-block" btntype="submit">Submit</button>
+<button id="sj" class="btn btn-lg btn-block blue darken-1" btntype="submit">Submit</button>
     </div><!--tab1-->
     
     <div id="menu1" class="container tab-pane fade">

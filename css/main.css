@@ -174,11 +174,11 @@ iframe {
   height: 100%;
   top: 0;
   left: 0;
-  background: rgba(93,84,240,0.5);
-  background: -webkit-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
-  background: -o-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
-  background: -moz-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
-  background: linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
+  background: rgb(7,2,91);
+  background: -webkit-linear-gradient(90deg, rgba(7,2,91,0.5102415966386555) 0%, rgba(1,1,166,0.48503151260504207) 11%, rgba(8,26,132,0.4906337535014006) 23%, rgba(23,145,170,0.4766281512605042) 94%);
+  background: -o-linear-gradient(90deg, rgba(7,2,91,0.5102415966386555) 0%, rgba(1,1,166,0.48503151260504207) 11%, rgba(8,26,132,0.4906337535014006) 23%, rgba(23,145,170,0.4766281512605042) 94%);
+  background: -moz-linear-gradient(90deg, rgba(7,2,91,0.5102415966386555) 0%, rgba(1,1,166,0.48503151260504207) 11%, rgba(8,26,132,0.4906337535014006) 23%, rgba(23,145,170,0.4766281512605042) 94%);
+  background: linear-gradient(90deg, rgba(7,2,91,0.5102415966386555) 0%, rgba(1,1,166,0.48503151260504207) 11%, rgba(8,26,132,0.4906337535014006) 23%, rgba(23,145,170,0.4766281512605042) 94%);
   pointer-events: none;
 }
 
@@ -292,7 +292,7 @@ iframe {
   padding: 0 20px;
   min-width: 160px;
   height: 50px;
-  background-color: #bd59d4;
+  background-color: #1e88e5 ;
   border-radius: 25px;
 
   font-family: SourceSansPro-SemiBold;
@@ -305,21 +305,21 @@ iframe {
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
   transition: all 0.4s;
-
+/*
   box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
   -moz-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
   -webkit-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
   -o-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
-  -ms-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
+  -ms-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);*/
 }
 
 .login100-form-btn:hover {
-  background-color:#4b2354;
-  box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
-  -moz-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
-  -webkit-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
-  -o-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
-  -ms-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
+  background-color:#0d47a1 ;
+  box-shadow: 0 10px 30px 0px #bbdefb ;
+  -moz-box-shadow: 0 10px 30px 0px #bbdefb ;
+  -webkit-box-shadow: 0 10px 30px 0px #bbdefb ;
+  -o-box-shadow: 0 10px 30px 0px #bbdefb ;
+  -ms-box-shadow: 0 10px 30px 0px #bbdefb ;
 }
 
 
