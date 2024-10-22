@@ -208,7 +208,7 @@ header, main, footer {
     ?>
   
 <center><h5><?php echo strtoupper($dep) . " Department"; ?></h5></center>
-<table  class="table table-sm table-hover table-responsive"> <thead> 
+<table  class="table table-hover "> <thead> 
 <tr> 
 <th>Class</th> 
 <th>Strength</th> 
