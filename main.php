@@ -101,12 +101,13 @@ color:grey;
 *{
 box-shadow:1px 0px 3px orange;
 }*/
-header, main, footer {
+header, main, footer,#fab-ul{
       padding-left: 300px;
     }
 
     @media only screen and (max-width : 992px) {
-      header, main, footer {
+      header, main, footer,#fab-ul
+       {
         padding-left: 0;
       }
     }
@@ -276,7 +277,7 @@ $conn->close();
     <div class="modal-content">
       <h5>Swap Class</h5>
   <div id="otphad" class="row"> </div>
-<form><input type="number" id="otpnum" class="form-control" pattern="[0-9]{4,6}"  placeholder="Number">  
+<form><input type="number" id="otpnum" class="form-control" pattern="[0-9]{4,6}"  placeholder="Create OTP Number">  
  <button id="subal" type="submit" class="btn waves-effect waves-teal btn-flat">Allow</button> <button id="subgt" type="submit" class="btn waves-effect waves-teal btn-flat right">Request</button></form> 
    <h5>Swapped Class</h5>
  <form id="subfor" method="POST"> </form>
@@ -306,7 +307,7 @@ $conn->close();
   <!--class="large"-->
     <i class="large material-icons">mode_edit</i>
   </a>
-  <ul>
+  <ul id="fab-ul">
  <li><a id="subi" class="btn-floating blue darken-1" ><i class="material-icons modal-trigger" href="#modal2">swap_horiz</i></a></li>
   <li><a id="redo" class="btn-floating blue darken-1" ><i class="material-icons modal-trigger" href="#modal3">update</i></a></li>
 <li><a id="all" class="btn-floating blue darken-1"><i class="material-icons">playlist_add_check</i></a></li>
@@ -971,7 +972,7 @@ $mtw=($currentYear-1).( ($currentYear-1)+($pg_duration) );
                         var sd = $(this).attr("name");
                         var as = $(this).attr("reg");
                         var df = $(this).attr("value");
-                        arr.push([sd, as, df]);
+                        arr.push([sd, as, df]);   //todo : somting error in this area
                       }); //ech      
 
                       $.ajax({
@@ -985,7 +986,8 @@ $mtw=($currentYear-1).( ($currentYear-1)+($pg_duration) );
                         },
                         success: function(data) {
                           $("#all").fadeOut();
-                          $("#sj2").text(data);
+                          $("#sj2").text("");
+                          //alert(data);
                           $("[value='P'],[value='A'],[value='O'] ").parent().fadeOut("slow").remove();
                         } //suc
                       }); //aj
