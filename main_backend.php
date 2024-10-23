@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return;
     } //sl if
     if ("update" == $_POST['a']) {
-        $Arr = $_POST['Arr'];
+       echo  $Arr = $_POST['Arr'];
         $cname = date('DdMY') . $_POST['pr'];
         if ($_POST['tname'] && $_POST['pr']) {
             $tname = $_POST['tname'];
@@ -147,9 +147,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
             }
             foreach ($Arr as $Ar) {
-                $n = $Ar[0];
-                $r = $Ar[1];
-                $v = $Ar[2];
+                 $n = $Ar[0];
+                 $r = $Ar[1];
+                 $v = $Ar[2];  //todo : clear error here
                 $upd = "UPDATE {$tname} SET {$cname}= '{$v}' WHERE Name ='{$n}' AND RegisterNumber={$r} ";
                 if ($conn->query($upd) === FALSE) {
                     echo "\nUpdate-Error : ";
@@ -337,9 +337,9 @@ if(isset($_POST['otp'])){
                 echo $row["Name"];
                 echo '</div>';
                 echo '</div>';
-                echo '<br><button id="sj2" class="btn btn-lg btn-block" btntype="submit">Submit</button>';
+               // echo '<br><button id="sj2" class="btn btn-lg btn-block" btntype="submit">Submit</button>';
             } //wh
-            
+             echo '<br><button id="sj2" class="btn btn-lg btn-block" btntype="submit">Submit</button>';
         } //if
         
     } // redo if
