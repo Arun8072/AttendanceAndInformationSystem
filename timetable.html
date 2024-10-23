@@ -132,7 +132,9 @@
 					<input class="input100" type="password" name="unqid" placeholder="Unique Password">
 					<span class="focus-input100"></span>
 				</div> 
-		
+
+		<center><h4 id="error-msg" class="m-3" ></h4></center>
+
 	  <div class="container-login100-form-btn">
 		<button id="ucreate" type="submit" value="submit" class="login100-form-btn cr-al" style="float:left">
 						Sign Up
@@ -215,15 +217,14 @@ tbl=JSON.stringify(tbl);
  var si =$(this).attr("id");
  $.ajax({
     type: "POST",
-    url: 'fl.php',
+    url: 'timetable_backend.php',
     data:{unqid:id,prd:tbl,ar:si,au:"user"},
     success: function(data){
       console.log(data);
     if (data!=="") {
      //window.location="index.php";
-        // console.log(data);
-         
-
+        //console.log(data);
+         $('#error-msg').html(data);
      }
     }//suc
     });//aj
