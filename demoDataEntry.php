@@ -381,8 +381,8 @@ if (isset($_GET["insert"]) && $_GET["insert"] == "tables") {
     }
 
     // for teacher 2 entry
-    $us = preg_replace("/[^a-zA-Z0-9.\s]/", "", "Priya");
-    $ps = MD5(strval(trim("Priya@123")));
+    $us = preg_replace("/[^a-zA-Z0-9.\s]/", "", "Dharshini");
+    $ps = MD5(strval(trim("Dharshini@123")));
     $sqlt->bind_param(
         "ssssssssssssssssssssssssssssssssssssssssssssssssss",
         $us,
@@ -477,7 +477,7 @@ if (isset($_GET["year"])) {
 
                 //}// post alter
                 //for staff name
-                $staff_name = ["Deepan", "Priya"];
+                $staff_name = ["Deepan", "Dharshini"];
                 $staff = $staff_name[rand(0, sizeof($staff_name) - 1)];
                 $upd = "UPDATE {$table_name} SET {$column_name[$loopvar8]}= '{$staff}' WHERE Name ='Staff' AND RegisterNumber='1' ";
                 if ($conn->query($upd) === false) {
