@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return;
     } //sl if
     if ("update" == $_POST['a']) {
-       echo  $Arr = $_POST['Arr'];
+         $Arr = $_POST['Arr'];
         $cname = date('DdMY') . $_POST['pr'];
         if ($_POST['tname'] && $_POST['pr']) {
             $tname = $_POST['tname'];
