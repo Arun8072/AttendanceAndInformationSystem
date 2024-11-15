@@ -770,7 +770,6 @@ $mtw=($currentYear-1).( ($currentYear-1)+($pg_duration) );
               a: "update"
             },
             success: function(data) {
-
               $("#all").fadeOut();
               $("#sj").text(data);
               $("[value='P'],[value='A'],[value='O'] ").parent().fadeOut("slow").remove();
